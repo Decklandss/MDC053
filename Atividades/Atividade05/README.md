@@ -72,7 +72,7 @@
      +--------------------------+          |matricula INT NOT NULL PK    |
      |codigo INT PK             |         /+-----------------------------+\
      +--------------------------+-|-----O+-|nome VARCHAR(100) NOT NULL   |-+O---+
-     |nome VARCHAR(100) NOT NULL|         \|salario DECIMAL(100) NOT NULL|/     |
+     |nome VARCHAR(100) NOT NULL|         \|salario DECIMAL(10) NOT NULL |/     |
      +--------------------------+          |gerente INT FK               |      |
                                            |departamento INT FK NOT NULL |-|----+
                                            +-----------------------------+
