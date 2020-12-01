@@ -1,0 +1,89 @@
+ 1  create database curso;
+    create table curso(
+    nome varchar(100) not null,
+    codigo int default primary key,
+    telefone varchar(100) not null,
+    centro varchar(100) not null
+    ) charset = utf8;
+
+    create table turma(
+    ra int primary key,
+    nome varchar(100) not null,
+    cpf int not null,
+    rua varchar(100) not null,
+    cidade varchar(100) not null,
+    cep int not null
+    ) charset = utf8;
+
+    create table aluno(
+    idcurso int not null primary key
+    nome varchar(100) not null if not exists,
+    tipo varchar(100) not null
+    ) chartset = utf8;
+
+    create table professor(
+    nome varchar(100) not null,
+    CPF int not null primary,
+    departamento varchar(100) not null,
+    telefone varchar (100) not null
+    ) chartset = utf8;
+    
+2 CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
+  `codigo` INT(100) NOT NULL AUTO_INCREMENT,
+  `numero_contrato` INT(100) NOT NULL,
+  `dtcadastro` DATETIME NOT NULL,
+  `dtrescisao` DATETIME NULL DEFAULT NULL,
+  `pessoa` INT(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`codigo`),
+  INDEX `fk_cliente_01_idx` (`pessoa` ASC),
+  CONSTRAINT `fk_cliente_01`
+    FOREIGN KEY (`pessoa`)
+    REFERENCES `mydb`.`Pessoa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Pessoa` (
+  `id` INT(100) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tipo` INT(100) UNSIGNED NOT NULL,
+  `cpf_cnpj` VARCHAR(100) NULL DEFAULT NULL,
+  `nome` VARCHAR(100) NULL DEFAULT NULL,
+  `email` VARCHAR(150) NULL DEFAULT NULL,
+  `cep` INT(11) NULL DEFAULT NULL,
+  `logradouro` VARCHAR(100) NULL DEFAULT NULL,
+  `numero` VARCHAR(100) NULL DEFAULT NULL,
+  `complemento` VARCHAR(100) NULL DEFAULT NULL,
+  `bairro` VARCHAR(100) NULL DEFAULT NULL,
+  `cidade` VARCHAR(100) NULL DEFAULT NULL,
+  `uf` VARCHAR(2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pessoa_01_idx` (`tipo` ASC),
+  CONSTRAINT `fk_pessoa_01`
+    FOREIGN KEY (`tipo`)
+    REFERENCES `mydb`.`TipoPessoa` (`codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`TipoPessoa` (
+  `codigo` INT(10) UNSIGNED NOT NULL,
+  `nome` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`codigo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+3 CREATE TABLE `departamento`
+  (codigo` int(100) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `telefone` varchar(100) NOT NULL,
+  `centro` varchar(100) NOT NULL,
+  PRIMARY KEY (`codigo`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  (NroFuncional VARCHAR(100) NOT NULL PRIMARY KEY
+  Nome VARCHAR(100) NOT NULL
+  DataNasc DATE NULL
+  Endereco VARCHAR(100) NULL
+  Sexo CHAR(100) NULL
+  Salario REAL(10) NULL );
