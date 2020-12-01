@@ -1,0 +1,82 @@
+1   NumeroEmp →NomeEmpregado, NumeroDepto
+    NumeroDept →NomeDepto, NumeroGerente
+    NumeroGerente→NomeGerente
+    NumeroProjeto→NomeProjeto
+    NumeroProjeto, NumeroEmpregado→Data de Inicio Projeto, Numero de Horas Projeto, valorhora
+    Data de Inicio→Valor-hora
+    2FN
+    Empregado(NumeroEmp, NomeEmpregado, NumeroDepto)
+    Depto (NumeroDepto, NomeDepto, NumeroGerente)
+    Gerente (NumeroGerente, NomeGerente)
+    Projeto(NumeroProjeto, NomeProjeto)
+    TrabalhaProjeto(NumeroProjeto, NumeroEmpregado, dataInicio, NumeroHoras, valor-hora)
+    3FN
+    TrabalhaProjeto(NumeroProjeto, NumeroEmpregado, dataInicio, NumeroHoras)
+    DataValor(DataInicio, valor-hora ) 
+   
+2   SELECT f.nome
+    FROM fornecedores f, pedidos p
+    WHERE f.cod_fornecedor = p.cod_fornecedor
+    GROUP BY f.nome
+    HAVING SUM(p.valor_total)>50
+    MINUS
+    SELECT f.nome
+    FROM fornecedores f, pedidos p
+    WHERE f.cod_fornecedor = p.cod_fornecedor AND
+          p.data_pedido < current_date - interval 1 year;
+          
+ 
+3   DROP TABLE itens_emprestimo;
+    CREATE TABLE itens_emprestimo
+    (  
+      num_emprestimo            INTEGER     NOT NULL  REFERENCES emprestimo,
+      ISBN                      NUMBER(14)  NOT NULL,
+      num_exemplar              NUMBER(2)   NOT NULL,
+      dt_hora_devolucao         TIMESTAMP,
+      situacao_itens_emprestimo CHAR(15)    NOT NULL,
+      PRIMARY KEY( num_emprestimo, ISBN, num_exemplar), --Neste caso especificar chave primaria juntos, pois são compostas.
+      FOREIGN KEY(ISBN, num_exemplar)
+      REFERENCES exemplar
+    );
+    CREATE TABLE aluno
+    (
+      cod_aluno           INTEGER       PRIMARY KEY,
+      nome_aluno          VARCHAR2(2)    NOT NULL,
+      end_aluno           VARCHAR2(100)  NOT NULL,
+      fone_aluno          CHAR(11),
+      sexo_aluno          CHAR(1)       CHECK(sexo_aluno IN('M','F')),
+      dt_nascto_aluno     DATE,
+      cpf_aluno           CHAR(11)      NOT NULL,
+      rg_aluno            CHAR(9)       NOT NULL,
+      tipo_aluno          CHAR(1)       CHECK(tipo_aluno  IN('A','P','F')),
+      tipo_identificador    CHAR(9)       CHECK(tipo_identificador IN('RA','Funcional')),
+      numero_identificador  CHAR(15)      NOT NULL,
+      area_vinculacao       CHAR(20),
+      cargo                 CHAR(15),
+      situacao_usuario      CHAR(15)      NOT NULL
+    );  
+      DROP TABLE livro CASCADE CONSTRAINTS;
+    CREATE TABLE livro
+    (
+      cod_livro       CHAR(10)      PRIMARY KEY,
+      titulo_livro    VARCHAR2(50)   NOT NULL,
+      titulo_original VARCHAR2(50),
+      idioma_original CHAR(20)      NOT NULL,
+      situacao_livro  CHAR(15)      NOT NULL,
+      cod_editora     CHAR(5)       NOT NULL,
+      cod_categ       INTEGER       NOT NULL,
+      FOREIGN KEY     (cod_editora) REFERENCES editora,
+      FOREIGN KEY     (cod_categ)   REFERENCES categoria_livro
+    );
+    DROP TABLE itens_emprestimo;
+    CREATE TABLE itens_emprestimo
+    (  
+      num_emprestimo            INTEGER     NOT NULL  REFERENCES emprestimo,
+      ISBN                      NUMBER(14)  NOT NULL,
+      num_exemplar              NUMBER(2)   NOT NULL,
+      dt_hora_devolucao         TIMESTAMP,
+      situacao_itens_emprestimo CHAR(15)    NOT NULL,
+      PRIMARY KEY( num_emprestimo, ISBN, num_exemplar), --Neste caso especificar chave primaria juntos, pois são compostas.
+      FOREIGN KEY(ISBN, num_exemplar)
+      REFERENCES exemplar
+    );
