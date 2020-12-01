@@ -1,0 +1,139 @@
+use escola;
+
+drop table if exists Professor;
+drop table if exists Disciplina;
+drop table if exists Historico;
+drop table if exists Turma;
+drop table if exists Aluno;
+
+create table Professor(
+	chapa int(3) zerofill not null auto_increment,
+	nome varchar(40) not null,
+	telefone varchar(10) not null,
+	email varchar(40) not null,
+	constraint pk_professor primary key(chapa)	
+);
+
+create table Disciplina(
+	cod_disciplina int(3) zerofill not null auto_increment,
+	nome varchar(30) not null,
+	carga_horaria decimal not null,
+	constraint pk_disciplina primary key(cod_disciplina)
+);
+
+create table Historico(
+	id_turno varchar(1) not null,
+	descricao varchar(5) not null
+);
+
+create table Turma(
+	cod_turma int(4) zerofill not null,
+	turno varchar(1) not null,
+	ano_inicio year(4) not null,
+	semestre tinyint zerofill not null,
+	disciplina int(3) zerofill not null,
+	professor int(3) zerofill not null,
+	constraint pk_turma primary key(cod_turma),
+	constraint fk_turtur foreign key(turno) references Turno(id_turno),
+	constraint fk_turdis foreign key(disciplina) references Disciplina(cod_disciplina),
+	constraint fk_turpro foreign key(professor) references Professor(chapa)
+);
+
+create table Aluno(
+	matricula int(7) not null,
+	nome varchar(30) not null,
+	telefone varchar(12) null,
+	constraint pk_aluno primary key(matricula)
+);
+
+use escola;
+
+insert into Professor values
+	(null, 'Aline', '95478521', 'aline.zenker@qi.edu.br'),
+	(null, 'Andressa', '94877487', 'andressa.dellay@qi.edu.br'),
+	(null, 'Frodo', '84214778', 'leandro.silva@qi.edu.br'),
+	(null, 'Jonatas', '94051980', 'jonatas.alcalay@qi.edu.br'),
+	(null, 'Rita', '81245478', 'rita.gaieski@qi.edu.br');
+	
+insert into Disciplina values
+	(null, 'Logica de Programaçao', 133),
+	(null, 'Internet I', 67),
+	(null, 'Banco de Dados I', 33.5),
+	(null, 'Computação Gráfica', 67),
+	(null, 'Linguagem de Banco de Dados', 33.5),
+	(null, 'Linguagem de Programação Web', 67);
+	
+insert into Turno values
+	('M', 'Manhã'),
+	('T', 'Tarde'),
+	('N', 'Noite');
+	
+insert into Turma values
+	(0547, 'M', '2014', 02, 002, 004),
+	(0235, 'M', '2015', 01, 001, 001),
+	(1475, 'T', '2014', 02, 004, 004),
+	(2698, 'N', '2015', 01, 006, 002),
+	(2175, 'N', '2014', 02, 005, 003);
+	
+insert into Aluno values
+	(2014159, 'Cassio', '34841598'),
+	(2014324, 'Amanda', '34902476'),
+	(2015817, 'Cristiano', null),
+	(2015369, 'Fernanda', '34882014'),
+	(2014474, 'Pablo', '34698720'),
+	(2014198, 'Luiza', null);
+	
+insert into Aluno_Turma values
+	(2698, 2015369, 6, 	7),
+	(1475, 2014159, 10, 8),
+	(0547, 2014474, 5.5, 7),
+	(2698, 2015817, 10, 10),
+	(2173, 2015369, 9.5, 9.8),
+	(2173, 2014198, 8, 4.5);
+  
+  
+  DISCIPLINA
+   +--------------------------------+
+   |id_curso INT AI PK              |
+   +--------------------------------+
+   |nome_curso VARCHAR(100) NOT NULL|
+   |carga_horaria SMALLINT          |
+   +--------------------------------+
+               _|_
+                |
+                |
+                |
+   TURMA       /|\
+   +----------------------------+            PROFESSOR
+   |id_turma INT NOT NULL AI PK |            +------------------------------------+
+   +----------------------------+            |id_professor INT NOT NULL AI PK     |
+   |id_curso INT NOT NULL FK    |\           +------------------------------------+
+   |id_professor INT NOT NULL FK|-+--------|-|nome_professor VARCHAR(100) NOT NULL|
+   |id_aluno INT NOT NULL FK    |/           |titulacao_professor CHAR(3)         |
+   |data_matricula DATE NOT NULL|            +------------------------------------+
+   +----------------------------+
+               \|/
+                |
+                |
+               _|_
+   ALUNO        |
+   +--------------------------------+
+   |id_aluno INT NOT NULL AI PK     |
+   +--------------------------------+
+   |nome_aluno VARCHAR(100) NOT NULL|
+   |email_aluno VARCHAR(100)        |
+   |fone_contato CHAR(14)           |
+   +--------------------------------+
+                |               
+               =|=               
+                |               
+                |               
+                |               
+               =|=
+                |
+   HISTORICO
+   +----------------------------+            
+   |id INT NOT NULL PK          |           
+   +----------------------------+           
+   |lnome VARCHAR(100) NOT NULL)|
+   +----------------------------+
